@@ -28,7 +28,8 @@ public:
         // compute the result
         int half = (n + 1) / 2;
         for (int i = 0; i < half; i++) {
-            ans = (ans + (word[i] - 'a') * modpow(k, half - i - 1, mod)) % mod;
+            ll numOfCharsLessThanCurrent = word[i] - 'a';
+            ans = (ans + numOfCharsLessThanCurrent * modpow(k, half - i - 1, mod)) % mod;
         }
 
         // add one to ans if the first half of the word can form a palindrome
