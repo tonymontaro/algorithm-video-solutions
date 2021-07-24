@@ -5,6 +5,8 @@ using namespace std;
 
 
 ll modpow(ll base, ll exp, ll modulus) {
+    // compute (base^exp) % modulus using Binary Exponentiation.
+    // Learn more here: https://cp-algorithms.com/algebra/binary-exp.html
     base %= modulus;
     ll result = 1;
     while (exp > 0) {
@@ -15,41 +17,50 @@ ll modpow(ll base, ll exp, ll modulus) {
     return result;
 }
 
-
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
+class Solution {
+public:
     ll mod = 1e9 + 7;
-    int cases;
-    cin >> cases;
-    for (int case_id = 1; case_id < cases + 1; case_id++) {
-        int n, k;
-        cin >> n >> k;
-        string word;
-        cin >> word;
-        if (n == 1) {
-            cout << "Case #" << case_id << ": " << (word[0] - 'a') << endl;
-            continue;
-        }
-
-        int half = (n + 1) / 2;
+    ll smallerStrings(int n, int k, string &word) const {
+        if (n == 1)
+            return word[0] - 'a';
         ll ans = 0;
+
+        // compute the result
+        int half = (n + 1) / 2;
         for (int i = 0; i < half; i++) {
             ans = (ans + (word[i] - 'a') * modpow(k, half - i - 1, mod)) % mod;
         }
+
+        // add one to ans if the first half of the word can form a palindrome
         int left = n % 2 == 0 ? half - 1 : half - 2;
         int right = half;
         while (left >= 0 && right < n) {
             if (word[left] != word[right]) {
-                if (word[right] > word[left]) ans++;
+                if (word[right] > word[left])
+                    ans = (ans + 1) % mod;
                 break;
             }
             left--;
             right++;
         }
-        cout << "Case #" << case_id << ": " << (ans % mod) << endl;
+        return ans;
     }
+};
 
+
+int main() {
+    int cases;
+    cin >> cases;
+    Solution solver;
+    for (int case_id = 1; case_id < cases + 1; case_id++) {
+        int n, k;
+        string word;
+        cin >> n >> k;
+        cin >> word;
+
+        ll result = solver.smallerStrings(n, k, word);
+
+        cout << "Case #" << case_id << ": " << result << endl;
+    }
     return 0;
 }
