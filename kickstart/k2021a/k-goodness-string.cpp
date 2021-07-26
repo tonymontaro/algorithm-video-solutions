@@ -5,6 +5,7 @@ using namespace std;
 class Solution{
 public:
     int kGoodnessString(int n, int k, string &word) {
+        // O(n) time | O(1) space
         int goodness = 0;
         for (int i = 0; i < n / 2; i++) {
             if (word[i] != word[n - i - 1])
