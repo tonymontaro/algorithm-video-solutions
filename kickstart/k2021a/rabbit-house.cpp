@@ -7,11 +7,8 @@ using namespace std;
 
 class Solution{
 public:
-    int rlen, clen;
-    ll rabbitHouse(v<v<int>> &grid, int rle, int cle, priority_queue<pair<int, pair<int, int>>> &pq){
-        rlen = rle, clen = cle;
-        v<pair<int, int>> dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-
+    ll rabbitHouse(v<v<int>> &grid, int rlen, int clen, priority_queue<pair<int, pair<int, int>>> &pq){
+        v<pair<int, int>> directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
         ll ans = 0;
         while (!pq.empty()) {
             auto node = pq.top();
@@ -21,7 +18,7 @@ public:
             if (grid[row][col] == -1) continue;
             ans += h - grid[row][col];
             grid[row][col] = -1;
-            for (auto[rAdd, cAdd]: dirs) {
+            for (auto [rAdd, cAdd]: directions) {
                 int r = row + rAdd, c = col + cAdd;
                 if (r < 0 || r >= rlen || c < 0 || c >= clen || grid[r][c] == -1) continue;
                 if (h - 1 > grid[r][c])
@@ -34,6 +31,7 @@ public:
 
 
 int main() {
+    // read input data
     int cases;
     cin >> cases;
     Solution solver;
