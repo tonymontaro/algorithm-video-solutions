@@ -9,14 +9,12 @@ public:
     ll alienGenerator(ll g) {
         // O(sqrt(g)) time | O(1) space
         ll ans = 0;
-        for (int n = 1; n < g + 1; n++) {
-            if (getMax(n) > g) break;
+        ll n = 1;
+        while ((n * n / 2) <= g) {
             if (hasValidStartingNumber(n, g)) ans++;
+            n++;
         }
         return ans;
-    }
-    ll getMax(ll n) {
-        return (n * (1 + n)) / 2;
     }
     ll hasValidStartingNumber(ll n, ll g) {
         return (g * 2) % (n) == 0 && ((g * 2) / (n) - n + 1) % 2 == 0;
